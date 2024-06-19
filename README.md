@@ -1,4 +1,4 @@
-Gestione di un sistema di eventi
+# Gestione di un sistema di eventi
 
 =============================================
 
