@@ -94,3 +94,70 @@ app.delete("/events/:id", (req,res)=>{
         data: "No entries found with this id"
         })
 })
+
+//PARTICIPANTS API
+app.get("/participants", (req,res)=>{
+    res.json({
+        status:"Success",
+        data: participant
+        })
+})
+
+app.get("/participants/:id", (req,res)=>{
+    let id = req.params.id
+    for([index,item] of participant.entries()){
+        if(item.id == id){
+            res.json({
+                status:"Success",
+                data: item
+                })
+        }
+    }
+    res.json({
+        status:"Error",
+        data: "No entries found with this id"
+        })
+})
+
+app.post("/participants", (req,res)=>{
+    let objToInsert = [{
+        id:req.params.id,
+        name:req.body.name,
+        email:req.body.email
+    }]
+    participant.push(objToInsert)
+    res.json({
+        status:"Success",
+        data:"Object inserted successfully"
+    })
+})
+
+app.put("/participants/:id", (req,res)=>{
+    let id = req.params.id
+    for([index,item] of participant.entries()){
+        if(item.id == id){
+            //Ho aggiunto questa piccola gestione delle eccezioni, fa sì che se si sta provando a modificare l'id, manda un errore
+            if(req.body.id) res.json({status:"Error", data:"You can't modify ID field"})
+            item.name = req.body.name ? req.body.name : item.name
+            item.email = req.body.email ? req.body.email : item.email
+            res.json({
+                status:"Success",
+                data:"Object updated successfully"
+            })
+        }
+    }
+    res.json({
+        status:"Error",
+        data: "No entries found with this id"
+        })
+})
+
+
+app.delete("/participants/:id", (req,res)=>{
+    let id = req.params.id
+    for([index,item] of participant.entries()){
+        if(item.id == id){
+            participant.splice(index,1)
+        }
+    }
+})
