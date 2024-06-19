@@ -23,7 +23,11 @@ let participant = [{
     name : "Participant 1",
     email : "participant1@example.com"
 }]
-
+let locations = [{
+    id : 1,
+    name : "Location 1",
+    address : "Address 1"
+}]
 //EVENTS API
 app.get("/events", (req,res)=>{
     res.json(events)
@@ -160,4 +164,88 @@ app.delete("/participants/:id", (req,res)=>{
             participant.splice(index,1)
         }
     }
+})
+
+//API LOCATIONS
+app.get("/locations", (req,res)=>{
+    res.json({
+        status:"Success",
+        data:locations
+        })
+})
+
+app.get("/locations/:id", (req,res)=>{
+    let id = req.params.id
+    for([index,item] of locations.entries()){
+        if(item.id == id){
+            res.json({
+                status:"Success",
+                data:item
+                })
+        }
+    }
+    res.json({
+        status:"Error",
+        data: "No entries found with this id"
+        })
+})
+
+app.post("/locations", (req,res)=>{
+    let objToInsert = [{
+        id: req.body.id,
+        name: req.body.name,
+        address: req.body.address
+    }]
+    //Aggiunta ricerca per gestione di eccezioni, se l'id è già presente all'interno dei mocks, restituisce un errore
+    for([index,item] of locations.entries()){
+        if(objToInsert.id == item.id){
+            res.json({
+                status:"Error",
+                data: "Entry already exists with this id"
+                })
+        }
+    }
+
+/*  ho aggiunto l'operatore di spread, ovvero "...", l'operatore fa sì che inserisce tanti oggetti 
+    quanti sono quelli inseriti nel body durante l'operazione. */ 
+    locations.push (...objToInsert)
+    res.json({
+        status:"Success",
+        data: "Entry added successfully"
+        })
+})
+
+app.put("/locations/:id", (req,res)=>{
+    let id = req.params.id
+    for([index,item] of locations.entries()){
+        if(item.id == id){
+            if(req.body.id){res.json({status:"Error", data:"You can't modify ID"})}
+            item.name = req.body.name
+            item.address = req.body.address
+            res.json({
+                status:"Success",
+                data: "Entry updated successfully"
+                })
+        }
+    }
+    res.json({
+        status:"Error",
+        data: "No entries found with this id"
+        })
+})
+app.delete("/locations/:id", (req,res)=>{
+    let id = req.params.id
+    for([index,item] of locations.entries()){
+        if(item.id == id){
+            locations.splice(index,1)
+            res.json({
+                status:"Success",
+                data: "Entry deleted successfully"
+                })
+        }
+    }
+    res.json({
+        status:"Error",
+        data: "No entries found with this id"
+        })
 })

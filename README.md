@@ -2,9 +2,11 @@
 
 =============================================
 
-Descrizione: Creare un'API per la gestione di un sistema di eventi. L'API deve gestire eventi, partecipanti e location. 
+Descrizione: Creare un'API per la gestione di un sistema di eventi. 
+L'API deve gestire eventi, partecipanti e location. 
 Ogni evento deve avere un nome, una descrizione, una data e un ID location. 
 Ogni partecipante deve avere un nome, un'email e un ID evento.
+Ogni location deve avere un ID, un nome ed un indirizzo.
 
 =============================================
 
@@ -38,12 +40,12 @@ Elimina un partecipante per ID.
 Endpoint richiesti: Location
 -------------------------
 1. GET /locations
-Recupera l'elenco di tutte le loca􏰀on.
+Recupera l'elenco di tutte le location.
 2. GET /locations/
 Recupera una singola location per ID.
 3. POST /locations
 Aggiunge una nuova location. Richiede un corpo con name e address .
 4. PUT /locations/
-Aggiorna i dettagli di una loca􏰀on esistente per ID.
+Aggiorna i dettagli di una location esistente per ID.
 5. DELETE /locations/
 Elimina una location per ID.
