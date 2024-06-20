@@ -57,7 +57,7 @@ app.post("/events", (req,res)=>{
         description : req.body.description,
         date : req.body.date
     }]
-    events = events.concat(objToInsert)
+    events = events.push(objToInsert)
     res.json({
         status:"Success",
         data:"Objected inserted successfully"
